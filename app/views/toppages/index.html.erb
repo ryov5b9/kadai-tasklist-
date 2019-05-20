@@ -1,2 +1,7 @@
-<h1>Welcome to the Tasklist</h1>
-<%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+<% if logged_in? %>
+  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+<% else %>
+<h1>Tasklist サイト</h1>
+<%= link_to 'sign up', signup_path %>
+<%= link_to 'Login', login_path %>
+<% end %>
