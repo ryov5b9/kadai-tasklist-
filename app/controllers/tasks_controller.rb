@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = current_user.tasks.build
+    @task = current_user.tasks.build(task_params)
   end
 
   def create
@@ -20,6 +20,7 @@ class TasksController < ApplicationController
       flash[:success] = 'タスクが正常に投稿されました'
       redirect_to root_url
     else
+    @tasks = current_user.tasks.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'タスクが投稿されませんでした'
       render 'toppages/index'
     end
@@ -31,7 +32,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash[:success] = 'タスクは正常に更新されました'
-      redirect_to @task
+      redirect_to '/'
     else
       flash.now[:danger] = 'タスクは更新されませんでした'
       render :edit
